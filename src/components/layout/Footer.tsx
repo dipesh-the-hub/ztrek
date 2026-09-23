@@ -136,34 +136,34 @@ export default async function Footer() {
           <h3 className="text-sm font-semibold tracking-wide uppercase text-gold-400">
             Associated With
           </h3>
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-4 sm:gap-6 rounded-2xl bg-white/95 px-6 py-5 sm:px-10 sm:py-6 shadow-lg shadow-black/20">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-7 sm:gap-10">
             <Image
-              src="/images/brand/logo-nepal-govt.jpg"
+              src="/images/brand/logo-nepal-govt-t.png"
               alt="Government of Nepal"
               width={488}
               height={409}
-              className="h-14 sm:h-16 w-auto"
+              className="h-14 sm:h-16 w-auto drop-shadow-[0_0_3px_rgba(255,255,255,0.55)]"
             />
             <Image
-              src="/images/brand/logo-ntb.png"
+              src="/images/brand/logo-ntb-t.png"
               alt="Nepal Tourism Board (NTB)"
               width={400}
               height={359}
-              className="h-14 sm:h-16 w-auto"
+              className="h-14 sm:h-16 w-auto drop-shadow-[0_0_3px_rgba(255,255,255,0.55)]"
             />
             <Image
-              src="/images/brand/logo-taan-clean.png"
+              src="/images/brand/logo-taan-t.png"
               alt="Trekking Agencies' Association of Nepal (TAAN)"
               width={743}
               height={413}
-              className="h-11 sm:h-12 w-auto"
+              className="h-11 sm:h-12 w-auto drop-shadow-[0_0_3px_rgba(255,255,255,0.55)]"
             />
             <Image
-              src="/images/brand/logo-nma.png"
+              src="/images/brand/logo-nma-t.png"
               alt="Nepal Mountaineering Association (NMA)"
               width={554}
               height={554}
-              className="h-14 sm:h-16 w-auto"
+              className="h-14 sm:h-16 w-auto drop-shadow-[0_0_3px_rgba(255,255,255,0.55)]"
             />
           </div>
         </Container>
