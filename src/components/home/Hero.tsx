@@ -2,7 +2,6 @@ import Image from "next/image";
 import { CheckCircle, Star } from "@phosphor-icons/react/dist/ssr";
 import Container from "@/components/ui/Container";
 import { LinkButton } from "@/components/ui/Button";
-import SkylineDivider from "@/components/ui/SkylineDivider";
 import type { SiteSettingsData } from "@/lib/data/siteSettings";
 
 export default function Hero({ settings }: { settings: SiteSettingsData }) {
@@ -62,11 +61,6 @@ export default function Hero({ settings }: { settings: SiteSettingsData }) {
           </div>
         </div>
       </Container>
-
-      <SkylineDivider
-        className="absolute bottom-0 left-0 h-20 sm:h-28 lg:h-32 -mb-px"
-        colorClassName="text-gold-500/25"
-      />
     </section>
   );
 }
