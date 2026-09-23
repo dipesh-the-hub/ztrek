@@ -28,7 +28,7 @@ export default async function TopTreks() {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
             eyebrow="Top Trekking Routes"
-            title="12 hand-picked treks across Nepal"
+            title={`${featuredTreks.length} hand-picked treks across Nepal`}
             description="From five-day sunrise walks to three-week wilderness crossings — every itinerary is built around proper acclimatization, not just the shortest possible schedule."
           />
           <LinkButton href="/treks" variant="ghost" className="hidden sm:inline-flex">

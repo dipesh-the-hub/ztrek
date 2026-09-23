@@ -7,6 +7,8 @@ import { testimonials } from "../src/lib/testimonials";
 import { guides } from "../src/lib/guides";
 import { regions } from "../src/lib/regions";
 import { categories } from "../src/lib/categories";
+import { DEFAULT_SITE_SETTINGS } from "../src/lib/data/siteSettings";
+import { DEFAULT_NAV_ITEMS } from "../src/lib/data/navItems";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
@@ -128,6 +130,32 @@ async function main() {
     }
   } else {
     console.log(`Skipping guides — ${guideCount} already in the database.`);
+  }
+
+  console.log("Seeding site settings...");
+  await prisma.siteSettings.upsert({
+    where: { id: "main" },
+    update: {},
+    create: { id: "main", ...DEFAULT_SITE_SETTINGS },
+  });
+
+  const navItemCount = await prisma.navItem.count();
+  if (navItemCount === 0) {
+    console.log(`Seeding ${DEFAULT_NAV_ITEMS.length} nav items...`);
+    for (const item of DEFAULT_NAV_ITEMS) {
+      await prisma.navItem.create({
+        data: {
+          id: item.id,
+          type: item.type,
+          label: item.label,
+          href: item.href,
+          sortOrder: item.sortOrder,
+          visible: item.visible,
+        },
+      });
+    }
+  } else {
+    console.log(`Skipping nav items — ${navItemCount} already in the database.`);
   }
 
   console.log("Seed complete.");

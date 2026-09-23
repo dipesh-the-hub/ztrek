@@ -5,13 +5,15 @@ import type { RegionGroup } from "@/components/layout/Navbar";
 
 export default function TreksMegaMenu({
   regionGroups,
+  label = "Treks & Regions",
   light,
 }: {
   regionGroups: RegionGroup[];
+  label?: string;
   light?: boolean;
 }) {
   return (
-    <NavPopover label="Treks & Regions" light={light} panelClassName="w-[min(90vw,880px)] -translate-x-[38%]">
+    <NavPopover label={label} light={light} panelClassName="w-[min(90vw,880px)] -translate-x-[38%]">
       <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-6">
         {regionGroups.map((group) => (
           <div key={group.slug}>
@@ -39,7 +41,9 @@ export default function TreksMegaMenu({
       </div>
 
       <div className="mt-6 pt-5 border-t border-stone-200 flex items-center justify-between">
-        <p className="text-xs text-stone-500">12 curated routes across 6 regions of Nepal</p>
+        <p className="text-xs text-stone-500">
+          {regionGroups.reduce((sum, g) => sum + g.treks.length, 0)} curated routes across {regionGroups.length} regions of Nepal
+        </p>
         <Link
           href="/treks"
           className="flex items-center gap-1.5 text-sm font-semibold text-navy-900 hover:text-gold-600 transition-colors"

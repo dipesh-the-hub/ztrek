@@ -108,6 +108,46 @@ model Guide {
   updatedAt DateTime @updatedAt
 }
 
+model SiteSettings {
+  id                     String   @id @default("main")
+  heroEyebrow            String   @default("Feel the Mountain Vibe — Kathmandu, Nepal")
+  heroHeadline           String   @default("Trek the Himalaya with TrekVibe Nepal")
+  heroSubheadline        String   @db.Text
+  heroImage              String   @default("/images/treks/everest-base-camp.jpg")
+  heroPrimaryCtaLabel    String   @default("Explore Treks")
+  heroPrimaryCtaHref     String   @default("/treks")
+  heroSecondaryCtaLabel  String   @default("Plan a Custom Trek")
+  heroSecondaryCtaHref   String   @default("/plan-your-trek")
+  heroRatingValue        String   @default("4.9/5")
+  heroRatingLabel        String   @default("guest rating")
+  heroBadge1             String   @default("Government-licensed guides")
+  heroBadge2             String   @default("12+ curated Himalayan routes")
+  showWhyChooseUs        Boolean  @default(true)
+  showTopTreks           Boolean  @default(true)
+  showTestimonials       Boolean  @default(true)
+  showGuides             Boolean  @default(true)
+  showTripPlannerCta     Boolean  @default(true)
+  showBlogPreview        Boolean  @default(true)
+  showFaq                Boolean  @default(true)
+  showFinalCta           Boolean  @default(true)
+  updatedAt              DateTime @updatedAt
+}
+
+// type: "home" | "about" | "treks" | "travellerInfo" | "link"
+// The first four are structural (tied to real dropdown content/mega menus)
+// and can be relabeled, hidden or reordered but not deleted or retyped.
+// "link" items are plain, freely addable/removable menu links.
+model NavItem {
+  id        String   @id @default(cuid())
+  type      String   @default("link")
+  label     String
+  href      String?
+  sortOrder Int      @default(0)
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum InquiryStatus {
   NEW
   CONTACTED

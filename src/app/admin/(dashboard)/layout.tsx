@@ -11,6 +11,8 @@ import {
   ArrowSquareOut,
   MapPinLine,
   Tag,
+  Gear,
+  ListBullets,
 } from "@phosphor-icons/react/dist/ssr";
 import { logoutAction } from "@/lib/actions/auth";
 import { USE_DB } from "@/lib/db";
@@ -18,6 +20,8 @@ import { USE_DB } from "@/lib/db";
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: SquaresFour },
   { href: "/admin/inquiries", label: "Inquiries", icon: Envelope },
+  { href: "/admin/settings", label: "Homepage Settings", icon: Gear },
+  { href: "/admin/menu", label: "Navigation Menu", icon: ListBullets },
   { href: "/admin/treks", label: "Treks", icon: Mountains },
   { href: "/admin/blog", label: "Blog Posts", icon: Newspaper },
   { href: "/admin/testimonials", label: "Testimonials", icon: ChatCircleText },

@@ -3,13 +3,14 @@ import { CheckCircle, Star } from "@phosphor-icons/react/dist/ssr";
 import Container from "@/components/ui/Container";
 import { LinkButton } from "@/components/ui/Button";
 import SkylineDivider from "@/components/ui/SkylineDivider";
+import type { SiteSettingsData } from "@/lib/data/siteSettings";
 
-export default function Hero() {
+export default function Hero({ settings }: { settings: SiteSettingsData }) {
   return (
     <section className="relative overflow-hidden bg-navy-950 -mt-20">
       <div className="absolute inset-0">
         <Image
-          src="/images/treks/everest-base-camp.jpg"
+          src={settings.heroImage}
           alt="Trekker ascending a snow ridge toward Mount Everest at sunrise"
           fill
           priority
@@ -22,39 +23,42 @@ export default function Hero() {
 
       <Container className="relative pt-40 pb-28 sm:pt-48 sm:pb-32 lg:pt-56 lg:pb-40">
         <p className="text-sm font-semibold tracking-[0.25em] uppercase text-gold-400">
-          Feel the Mountain Vibe — Kathmandu, Nepal
+          {settings.heroEyebrow}
         </p>
         <h1 className="mt-5 max-w-2xl font-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-[1.08] text-balance">
-          Trek the Himalaya with TrekVibe Nepal
+          {settings.heroHeadline}
         </h1>
         <p className="mt-6 max-w-xl text-base sm:text-lg text-white/85 leading-relaxed">
-          A Kathmandu-based trekking agency taking you from Everest Base Camp
-          to the hidden valleys of Upper Dolpo — guided by certified local
-          experts who know these trails as home.
+          {settings.heroSubheadline}
         </p>
 
         <div className="mt-9 flex flex-wrap items-center gap-4">
-          <LinkButton href="/treks" size="lg">
-            Explore Treks
+          <LinkButton href={settings.heroPrimaryCtaHref} size="lg">
+            {settings.heroPrimaryCtaLabel}
           </LinkButton>
-          <LinkButton href="/plan-your-trek" variant="secondary" size="lg" className="bg-white/10 hover:bg-white/20 backdrop-blur">
-            Plan a Custom Trek
+          <LinkButton
+            href={settings.heroSecondaryCtaHref}
+            variant="secondary"
+            size="lg"
+            className="bg-white/10 hover:bg-white/20 backdrop-blur"
+          >
+            {settings.heroSecondaryCtaLabel}
           </LinkButton>
         </div>
 
         <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4">
           <div className="flex items-center gap-2 text-white">
             <Star size={20} weight="fill" className="text-gold-400" aria-hidden="true" />
-            <span className="font-semibold">4.9/5</span>
-            <span className="text-sm text-white/70">guest rating</span>
+            <span className="font-semibold">{settings.heroRatingValue}</span>
+            <span className="text-sm text-white/70">{settings.heroRatingLabel}</span>
           </div>
           <div className="flex items-center gap-2 text-white">
             <CheckCircle size={20} weight="fill" className="text-gold-400" aria-hidden="true" />
-            <span className="text-sm text-white/85">Government-licensed guides</span>
+            <span className="text-sm text-white/85">{settings.heroBadge1}</span>
           </div>
           <div className="flex items-center gap-2 text-white">
             <CheckCircle size={20} weight="fill" className="text-gold-400" aria-hidden="true" />
-            <span className="text-sm text-white/85">12+ curated Himalayan routes</span>
+            <span className="text-sm text-white/85">{settings.heroBadge2}</span>
           </div>
         </div>
       </Container>

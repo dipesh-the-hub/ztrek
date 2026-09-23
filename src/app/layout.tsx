@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "TrekVibe Nepal | Trekking & Expedition Agency in Kathmandu",
     description:
-      "Feel the mountain vibe. Certified local guides, tailor-made itineraries, and 12+ Himalayan treks across Nepal.",
+      "Feel the mountain vibe. Certified local guides, tailor-made itineraries, and 25+ treks, peak climbs, safaris and city tours across Nepal.",
     url: "https://trekvibenepal.com",
     siteName: "TrekVibe Nepal",
     locale: "en_US",

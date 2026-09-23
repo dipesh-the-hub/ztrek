@@ -24,7 +24,7 @@ const values = [
   },
   {
     icon: Mountains,
-    title: "12+ Curated Routes",
+    title: "25+ Curated Routes",
     description:
       "From the short and family-friendly Poon Hill trail to the three-week Upper Dolpo wilderness crossing.",
   },

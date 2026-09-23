@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -10,6 +10,7 @@ import { LinkButton } from "@/components/ui/Button";
 import NavDropdown from "@/components/layout/NavDropdown";
 import TreksMegaMenu from "@/components/layout/TreksMegaMenu";
 import type { Region, Trek } from "@/lib/treks";
+import type { NavItemData } from "@/lib/data/navItems";
 
 export type RegionGroup = Region & { treks: Trek[] };
 
@@ -27,7 +28,18 @@ const travelInfoItems = [
   { label: "All Trip-Planning Guides", href: "/blog" },
 ];
 
-export default function Navbar({ regionGroups }: { regionGroups: RegionGroup[] }) {
+function isLinkActive(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname.startsWith(href);
+}
+
+export default function Navbar({
+  regionGroups,
+  navItems,
+}: {
+  regionGroups: RegionGroup[];
+  navItems: NavItemData[];
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [prevPathname, setPrevPathname] = useState(pathname);
@@ -61,10 +73,17 @@ export default function Navbar({ regionGroups }: { regionGroups: RegionGroup[] }
 
   const transparent = hasHeroImage && !scrolled && !open;
 
-  const treksActive = pathname.startsWith("/treks");
-  const aboutActive = pathname.startsWith("/about");
-  const blogActive = pathname.startsWith("/blog");
-  const contactActive = pathname.startsWith("/contact");
+  function linkClass(active: boolean) {
+    return `text-sm font-semibold transition-colors ${
+      active
+        ? transparent
+          ? "text-gold-400"
+          : "text-gold-600"
+        : transparent
+          ? "text-white hover:text-gold-300"
+          : "text-navy-900 hover:text-gold-600"
+    }`;
+  }
 
   return (
     <header
@@ -97,51 +116,32 @@ export default function Navbar({ regionGroups }: { regionGroups: RegionGroup[] }
         </Link>
 
         <nav className="hidden lg:flex items-center gap-7" aria-label="Primary">
-          <Link
-            href="/"
-            className={`text-sm font-semibold transition-colors ${
-              pathname === "/"
-                ? transparent
-                  ? "text-gold-400"
-                  : "text-gold-600"
-                : transparent
-                  ? "text-white hover:text-gold-300"
-                  : "text-navy-900 hover:text-gold-600"
-            }`}
-          >
-            Home
-          </Link>
-          <NavDropdown label="About Us" items={aboutItems} light={transparent} />
-          <TreksMegaMenu regionGroups={regionGroups} light={transparent} />
-          <NavDropdown label="Traveller's Info" items={travelInfoItems} light={transparent} />
-          <Link
-            href="/blog"
-            className={`text-sm font-semibold transition-colors ${
-              blogActive
-                ? transparent
-                  ? "text-gold-400"
-                  : "text-gold-600"
-                : transparent
-                  ? "text-white hover:text-gold-300"
-                  : "text-navy-900 hover:text-gold-600"
-            }`}
-          >
-            Blog
-          </Link>
-          <Link
-            href="/contact"
-            className={`text-sm font-semibold transition-colors ${
-              contactActive
-                ? transparent
-                  ? "text-gold-400"
-                  : "text-gold-600"
-                : transparent
-                  ? "text-white hover:text-gold-300"
-                  : "text-navy-900 hover:text-gold-600"
-            }`}
-          >
-            Contact
-          </Link>
+          {navItems.map((item) => {
+            switch (item.type) {
+              case "about":
+                return <NavDropdown key={item.id} label={item.label} items={aboutItems} light={transparent} />;
+              case "treks":
+                return (
+                  <TreksMegaMenu
+                    key={item.id}
+                    regionGroups={regionGroups}
+                    label={item.label}
+                    light={transparent}
+                  />
+                );
+              case "travellerInfo":
+                return <NavDropdown key={item.id} label={item.label} items={travelInfoItems} light={transparent} />;
+              case "home":
+              case "link":
+              default:
+                if (!item.href) return null;
+                return (
+                  <Link key={item.id} href={item.href} className={linkClass(isLinkActive(pathname, item.href))}>
+                    {item.label}
+                  </Link>
+                );
+            }
+          })}
         </nav>
 
         <div className="hidden lg:flex items-center gap-4">
@@ -175,82 +175,87 @@ export default function Navbar({ regionGroups }: { regionGroups: RegionGroup[] }
       {open && (
         <div className="lg:hidden border-t border-stone-300/60 bg-cream max-h-[calc(100vh-5rem)] overflow-y-auto">
           <Container className="py-4 flex flex-col gap-1">
-            <Link
-              href="/"
-              className={`min-h-11 flex items-center text-base font-semibold rounded-lg px-3 ${
-                pathname === "/" ? "text-gold-600 bg-navy-50" : "text-navy-900"
-              }`}
-            >
-              Home
-            </Link>
-
-            <MobileGroup
-              title="About Us"
-              open={mobileGroup === "about"}
-              active={aboutActive}
-              onToggle={() => setMobileGroup((g) => (g === "about" ? null : "about"))}
-            >
-              {aboutItems.map((item) => (
-                <Link key={item.href} href={item.href} className="block min-h-11 flex items-center text-sm text-navy-800 pl-4">
-                  {item.label}
-                </Link>
-              ))}
-            </MobileGroup>
-
-            <MobileGroup
-              title="Treks & Regions"
-              open={mobileGroup === "treks"}
-              active={treksActive}
-              onToggle={() => setMobileGroup((g) => (g === "treks" ? null : "treks"))}
-            >
-              {regionGroups.map((group) => (
-                <div key={group.slug} className="pl-4">
-                  <Link href={`/treks?region=${group.slug}`} className="block min-h-11 flex items-center text-sm font-semibold text-navy-900">
-                    {group.label}
-                  </Link>
-                  <div className="pl-3 flex flex-col">
-                    {group.treks.map((trek) => (
-                      <Link key={trek.slug} href={`/treks/${trek.slug}`} className="block min-h-9 flex items-center text-sm text-navy-700">
-                        {trek.name}
+            {navItems.map((item) => {
+              switch (item.type) {
+                case "about":
+                  return (
+                    <MobileGroup
+                      key={item.id}
+                      title={item.label}
+                      open={mobileGroup === item.id}
+                      active={isLinkActive(pathname, "/about")}
+                      onToggle={() => setMobileGroup((g) => (g === item.id ? null : item.id))}
+                    >
+                      {aboutItems.map((sub) => (
+                        <Link key={sub.href} href={sub.href} className="block min-h-11 flex items-center text-sm text-navy-800 pl-4">
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </MobileGroup>
+                  );
+                case "treks":
+                  return (
+                    <MobileGroup
+                      key={item.id}
+                      title={item.label}
+                      open={mobileGroup === item.id}
+                      active={isLinkActive(pathname, "/treks")}
+                      onToggle={() => setMobileGroup((g) => (g === item.id ? null : item.id))}
+                    >
+                      {regionGroups.map((group) => (
+                        <div key={group.slug} className="pl-4">
+                          <Link href={`/treks?region=${group.slug}`} className="block min-h-11 flex items-center text-sm font-semibold text-navy-900">
+                            {group.label}
+                          </Link>
+                          <div className="pl-3 flex flex-col">
+                            {group.treks.map((trek) => (
+                              <Link key={trek.slug} href={`/treks/${trek.slug}`} className="block min-h-9 flex items-center text-sm text-navy-700">
+                                {trek.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                      <Link href="/treks" className="block min-h-11 flex items-center text-sm font-semibold text-gold-600 pl-4">
+                        View All Treks
                       </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
-              <Link href="/treks" className="block min-h-11 flex items-center text-sm font-semibold text-gold-600 pl-4">
-                View All Treks
-              </Link>
-            </MobileGroup>
-
-            <MobileGroup
-              title="Traveller's Info"
-              open={mobileGroup === "info"}
-              active={false}
-              onToggle={() => setMobileGroup((g) => (g === "info" ? null : "info"))}
-            >
-              {travelInfoItems.map((item) => (
-                <Link key={item.href} href={item.href} className="block min-h-11 flex items-center text-sm text-navy-800 pl-4">
-                  {item.label}
-                </Link>
-              ))}
-            </MobileGroup>
-
-            <Link
-              href="/blog"
-              className={`min-h-11 flex items-center text-base font-semibold rounded-lg px-3 ${
-                blogActive ? "text-gold-600 bg-navy-50" : "text-navy-900"
-              }`}
-            >
-              Blog
-            </Link>
-            <Link
-              href="/contact"
-              className={`min-h-11 flex items-center text-base font-semibold rounded-lg px-3 ${
-                contactActive ? "text-gold-600 bg-navy-50" : "text-navy-900"
-              }`}
-            >
-              Contact
-            </Link>
+                    </MobileGroup>
+                  );
+                case "travellerInfo":
+                  return (
+                    <MobileGroup
+                      key={item.id}
+                      title={item.label}
+                      open={mobileGroup === item.id}
+                      active={false}
+                      onToggle={() => setMobileGroup((g) => (g === item.id ? null : item.id))}
+                    >
+                      {travelInfoItems.map((sub) => (
+                        <Link key={sub.href} href={sub.href} className="block min-h-11 flex items-center text-sm text-navy-800 pl-4">
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </MobileGroup>
+                  );
+                case "home":
+                case "link":
+                default: {
+                  if (!item.href) return null;
+                  const active = isLinkActive(pathname, item.href);
+                  return (
+                    <Link
+                      key={item.id}
+                      href={item.href}
+                      className={`min-h-11 flex items-center text-base font-semibold rounded-lg px-3 ${
+                        active ? "text-gold-600 bg-navy-50" : "text-navy-900"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
+              }
+            })}
             <a
               href="tel:+9779741765998"
               className="min-h-11 flex items-center gap-2 text-base font-semibold text-navy-900 px-3"
