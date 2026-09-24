@@ -12,7 +12,6 @@ import { usePathname } from "next/navigation";
  *   data-magnetic      button drifts toward the cursor
  *   data-glow          sets --mx/--my for a glow that follows the cursor
  *   data-tilt          3D tilt toward the cursor, sets --gx/--gy for the glare
- *   data-parallax-root children with data-depth follow the cursor
  *
  * Pointer effects only run on devices with a precise hovering pointer, and
  * nothing runs when the visitor prefers reduced motion.
@@ -90,17 +89,6 @@ export default function MotionEffects() {
         const r = g.getBoundingClientRect();
         g.style.setProperty("--mx", `${e.clientX - r.left}px`);
         g.style.setProperty("--my", `${e.clientY - r.top}px`);
-      }
-
-      const p = target?.closest<HTMLElement>("[data-parallax-root]");
-      if (p) {
-        const cx = e.clientX / window.innerWidth - 0.5;
-        const cy = e.clientY / window.innerHeight - 0.5;
-        p.querySelectorAll<HTMLElement>("[data-depth]").forEach((el) => {
-          const depth = Number(el.dataset.depth);
-          el.style.setProperty("--tx", `${cx * depth}px`);
-          el.style.setProperty("--ty", `${cy * depth}px`);
-        });
       }
     }
 

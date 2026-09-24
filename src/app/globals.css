@@ -120,24 +120,6 @@ html {
   to { opacity: 1; transform: none; }
 }
 
-@keyframes tv-blur-in {
-  from { opacity: 0; filter: blur(14px); transform: translateY(0.3em); }
-  to { opacity: 1; filter: none; transform: none; }
-}
-
-@keyframes tv-shine {
-  from { background-position: 100% 0; }
-  to { background-position: -150% 0; }
-}
-
-@keyframes tv-deal-in {
-  from { opacity: 0; transform: translate3d(0, 80px, 0) rotate(0deg) scale(0.9); }
-}
-
-@keyframes tv-draw {
-  to { stroke-dashoffset: 0; }
-}
-
 @keyframes tv-curtain-up {
   to { transform: translateY(-100%); }
 }
@@ -153,43 +135,6 @@ html {
 }
 .tv-intro-logo { animation: tv-pop 0.7s var(--ease-out-expo) both; }
 .tv-intro-word { animation: tv-fade-up 0.7s var(--ease-out-expo) 0.15s both; }
-
-/* Hero entrance. --tv-delay leaves room for the intro curtain. */
-.tv-hero { --tv-delay: 1.3s; }
-.tv-word {
-  display: inline-block;
-  animation: tv-blur-in 1s var(--ease-out-expo) both;
-  animation-delay: calc(var(--tv-delay) + var(--i, 0) * 0.08s);
-}
-.tv-shine {
-  font-style: italic;
-  font-weight: 500;
-  background: linear-gradient(100deg, var(--color-gold-400) 20%, #fff4d6 40%, var(--color-gold-300) 60%, var(--color-gold-500) 80%);
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation:
-    tv-blur-in 1s var(--ease-out-expo) both,
-    tv-shine 5s linear infinite;
-  animation-delay: calc(var(--tv-delay) + var(--i, 0) * 0.08s), calc(var(--tv-delay) + 1.2s);
-}
-.tv-fade-up {
-  animation: tv-fade-up 0.9s var(--ease-out-expo) both;
-  animation-delay: calc(var(--tv-delay, 0s) + 0.3s + var(--i, 0) * 0.1s);
-}
-.tv-photo {
-  transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) rotate(var(--r, 0deg));
-  transition: transform 0.9s var(--ease-out-expo);
-  animation: tv-deal-in 1.2s var(--ease-out-expo) both;
-  animation-delay: calc(var(--tv-delay) + 0.1s + var(--i, 0) * 0.15s);
-}
-.tv-ridge-line {
-  stroke-dasharray: 3000;
-  stroke-dashoffset: 3000;
-  animation: tv-draw 3s ease-out forwards;
-  animation-delay: calc(var(--tv-delay) + 0.5s);
-}
 
 /* Scroll reveal. MotionEffects adds .tv-pending only to elements below the first screen. */
 [data-reveal] {
@@ -255,7 +200,6 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
   .tv-intro { display: none; }
-  .tv-ridge-line { stroke-dashoffset: 0; }
   [data-reveal].tv-pending { opacity: 1; transform: none; }
   [data-curtain].tv-pending { clip-path: inset(0 0 0 0); }
   [data-curtain].tv-pending img { transform: none; }

@@ -1,4 +1,4 @@
-import Hero, { type HeroPhoto } from "@/components/home/Hero";
+import Hero from "@/components/home/Hero";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import TopTreks from "@/components/home/TopTreks";
 import ElevationProfile from "@/components/home/ElevationProfile";
@@ -11,39 +11,15 @@ import Gallery from "@/components/home/Gallery";
 import FinalCTA from "@/components/home/FinalCTA";
 import IntroCurtain from "@/components/motion/IntroCurtain";
 import { getSiteSettings } from "@/lib/data/siteSettings";
-import { getAllTreks } from "@/lib/data/treks";
 import { getGalleryPhotos } from "@/lib/data/gallery";
 
-// Treks shown behind the CMS hero image in the fanned photo stack.
-const heroStackSlugs = ["annapurna-base-camp-trek", "manaslu-circuit-trek"];
-
 export default async function Home() {
-  const [settings, treks, galleryPhotos] = await Promise.all([
-    getSiteSettings(),
-    getAllTreks(),
-    getGalleryPhotos(),
-  ]);
-
-  const heroPhotos: HeroPhoto[] = [
-    ...heroStackSlugs
-      .map((slug) => treks.find((t) => t.slug === slug))
-      .filter((t) => t !== undefined)
-      .map((t) => ({
-        src: t.heroImage,
-        alt: `${t.name} in the ${t.region}, Nepal`,
-        caption: `${t.name.replace(/ Trek$/, "")} · ${t.maxAltitude.split(" / ")[0]}`,
-      })),
-    {
-      src: settings.heroImage,
-      alt: "Trekking in the Nepal Himalaya with TrekVibe Nepal",
-      caption: settings.heroBadge2,
-    },
-  ];
+  const [settings, galleryPhotos] = await Promise.all([getSiteSettings(), getGalleryPhotos()]);
 
   return (
     <>
       <IntroCurtain />
-      <Hero settings={settings} photos={heroPhotos} />
+      <Hero settings={settings} />
       {settings.showWhyChooseUs && <WhyChooseUs />}
       {settings.showTopTreks && <TopTreks />}
       <ElevationProfile />
