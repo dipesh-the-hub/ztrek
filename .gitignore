@@ -44,3 +44,9 @@ next-env.d.ts
 source-images-original/
 
 /src/generated/prisma
+
+# Instruction files that AI coding tools create when they start the dev server.
+# Project notes live in DEVELOPMENT.md instead.
+/AGENTS.md
+/CLAUDE.md
+/.claude/
