@@ -12,12 +12,17 @@ import FinalCTA from "@/components/home/FinalCTA";
 import IntroCurtain from "@/components/motion/IntroCurtain";
 import { getSiteSettings } from "@/lib/data/siteSettings";
 import { getAllTreks } from "@/lib/data/treks";
+import { getGalleryPhotos } from "@/lib/data/gallery";
 
 // Treks shown behind the CMS hero image in the fanned photo stack.
 const heroStackSlugs = ["annapurna-base-camp-trek", "manaslu-circuit-trek"];
 
 export default async function Home() {
-  const [settings, treks] = await Promise.all([getSiteSettings(), getAllTreks()]);
+  const [settings, treks, galleryPhotos] = await Promise.all([
+    getSiteSettings(),
+    getAllTreks(),
+    getGalleryPhotos(),
+  ]);
 
   const heroPhotos: HeroPhoto[] = [
     ...heroStackSlugs
@@ -47,7 +52,7 @@ export default async function Home() {
       {settings.showTripPlannerCta && <TripPlannerCTA />}
       {settings.showBlogPreview && <BlogPreview />}
       {settings.showFaq && <FAQSection />}
-      <Gallery />
+      {settings.showGallery && galleryPhotos.length > 0 && <Gallery photos={galleryPhotos} />}
       {settings.showFinalCta && <FinalCTA />}
     </>
   );

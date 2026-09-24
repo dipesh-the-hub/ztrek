@@ -15,6 +15,7 @@ const sectionToggles: { name: keyof SiteSettingsData; label: string }[] = [
   { name: "showTripPlannerCta", label: "Trip planner call-to-action banner" },
   { name: "showBlogPreview", label: "Latest from the blog" },
   { name: "showFaq", label: "Frequently asked questions" },
+  { name: "showGallery", label: "\"Views you walk for\" photo gallery" },
   { name: "showFinalCta", label: "Final \"Ready to feel the mountain vibe\" section" },
 ];
 

@@ -50,6 +50,7 @@ export async function updateSiteSettingsAction(
     showBlogPreview: checked(formData, "showBlogPreview"),
     showFaq: checked(formData, "showFaq"),
     showFinalCta: checked(formData, "showFinalCta"),
+    showGallery: checked(formData, "showGallery"),
   };
 
   await prisma.siteSettings.upsert({

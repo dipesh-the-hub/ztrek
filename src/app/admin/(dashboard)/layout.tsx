@@ -13,6 +13,7 @@ import {
   Tag,
   Gear,
   ListBullets,
+  Images,
 } from "@phosphor-icons/react/dist/ssr";
 import { logoutAction } from "@/lib/actions/auth";
 import { USE_DB } from "@/lib/db";
@@ -26,6 +27,7 @@ const navItems = [
   { href: "/admin/blog", label: "Blog Posts", icon: Newspaper },
   { href: "/admin/testimonials", label: "Testimonials", icon: ChatCircleText },
   { href: "/admin/guides", label: "Guides", icon: UsersThree },
+  { href: "/admin/gallery", label: "Gallery", icon: Images },
   { href: "/admin/regions", label: "Regions", icon: MapPinLine },
   { href: "/admin/categories", label: "Categories", icon: Tag },
 ];

@@ -95,6 +95,18 @@ model Testimonial {
   updatedAt DateTime @updatedAt
 }
 
+model GalleryPhoto {
+  id        String   @id @default(cuid())
+  imageUrl  String
+  alt       String
+  title     String
+  detail    String   @default("")
+  sortOrder Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Guide {
   id        String   @id @default(cuid())
   name      String
@@ -130,6 +142,7 @@ model SiteSettings {
   showBlogPreview        Boolean  @default(true)
   showFaq                Boolean  @default(true)
   showFinalCta           Boolean  @default(true)
+  showGallery            Boolean  @default(true)
   updatedAt              DateTime @updatedAt
 }
 
