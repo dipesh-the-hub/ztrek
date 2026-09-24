@@ -23,7 +23,7 @@ export default async function TopTreks() {
     .filter((t): t is Trek => Boolean(t));
 
   return (
-    <section className="section-y bg-cream" id="top-treks">
+    <section className="section-y bg-white" id="top-treks">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
@@ -38,7 +38,9 @@ export default async function TopTreks() {
 
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {featuredTreks.map((trek, i) => (
-            <TrekCard key={trek.slug} trek={trek} priority={i < 4} />
+            <div key={trek.slug} data-reveal style={{ "--d": `${(i % 4) * 0.08}s` } as React.CSSProperties}>
+              <TrekCard trek={trek} />
+            </div>
           ))}
         </div>
 

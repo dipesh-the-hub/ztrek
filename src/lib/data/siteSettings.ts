@@ -21,6 +21,7 @@ export interface SiteSettingsData {
   showBlogPreview: boolean;
   showFaq: boolean;
   showFinalCta: boolean;
+  showGallery: boolean;
 }
 
 export const DEFAULT_SITE_SETTINGS: SiteSettingsData = {
@@ -45,6 +46,7 @@ export const DEFAULT_SITE_SETTINGS: SiteSettingsData = {
   showBlogPreview: true,
   showFaq: true,
   showFinalCta: true,
+  showGallery: true,
 };
 
 export async function getSiteSettings(): Promise<SiteSettingsData> {
@@ -72,5 +74,6 @@ export async function getSiteSettings(): Promise<SiteSettingsData> {
     showBlogPreview: row.showBlogPreview,
     showFaq: row.showFaq,
     showFinalCta: row.showFinalCta,
+    showGallery: row.showGallery,
   };
 }

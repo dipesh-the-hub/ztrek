@@ -21,17 +21,17 @@ export default function Hero({ settings }: { settings: SiteSettingsData }) {
       </div>
 
       <Container className="relative pt-40 pb-28 sm:pt-48 sm:pb-32 lg:pt-56 lg:pb-40">
-        <p className="text-sm font-semibold tracking-[0.25em] uppercase text-gold-400">
+        <p className="tv-hero-in text-sm font-semibold tracking-[0.25em] uppercase text-gold-400" style={{ "--i": 0 } as React.CSSProperties}>
           {settings.heroEyebrow}
         </p>
-        <h1 className="mt-5 max-w-2xl font-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-[1.08] text-balance">
+        <h1 style={{ "--i": 1 } as React.CSSProperties} className="tv-hero-in mt-5 max-w-2xl font-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-[1.08] text-balance">
           {settings.heroHeadline}
         </h1>
-        <p className="mt-6 max-w-xl text-base sm:text-lg text-white/85 leading-relaxed">
+        <p style={{ "--i": 2 } as React.CSSProperties} className="tv-hero-in mt-6 max-w-xl text-base sm:text-lg text-white/85 leading-relaxed">
           {settings.heroSubheadline}
         </p>
 
-        <div className="mt-9 flex flex-wrap items-center gap-4">
+        <div className="tv-hero-in mt-9 flex flex-wrap items-center gap-4" style={{ "--i": 3 } as React.CSSProperties}>
           <LinkButton href={settings.heroPrimaryCtaHref} size="lg">
             {settings.heroPrimaryCtaLabel}
           </LinkButton>
@@ -45,7 +45,7 @@ export default function Hero({ settings }: { settings: SiteSettingsData }) {
           </LinkButton>
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4">
+        <div className="tv-hero-in mt-12 flex flex-wrap items-center gap-x-8 gap-y-4" style={{ "--i": 4 } as React.CSSProperties}>
           <div className="flex items-center gap-2 text-white">
             <Star size={20} weight="fill" className="text-gold-400" aria-hidden="true" />
             <span className="font-semibold">{settings.heroRatingValue}</span>

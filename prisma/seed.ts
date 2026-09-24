@@ -4,6 +4,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { treks } from "../src/lib/treks";
 import { blogPosts } from "../src/lib/blog";
 import { testimonials } from "../src/lib/testimonials";
+import { galleryPhotos } from "../src/lib/gallery";
 import { guides } from "../src/lib/guides";
 import { regions } from "../src/lib/regions";
 import { categories } from "../src/lib/categories";
@@ -130,6 +131,16 @@ async function main() {
     }
   } else {
     console.log(`Skipping guides — ${guideCount} already in the database.`);
+  }
+
+  const galleryCount = await prisma.galleryPhoto.count();
+  if (galleryCount === 0) {
+    console.log(`Seeding ${galleryPhotos.length} gallery photos...`);
+    for (const [i, photo] of galleryPhotos.entries()) {
+      await prisma.galleryPhoto.create({ data: { ...photo, sortOrder: i } });
+    }
+  } else {
+    console.log(`Skipping gallery photos — ${galleryCount} already in the database.`);
   }
 
   console.log("Seeding site settings...");

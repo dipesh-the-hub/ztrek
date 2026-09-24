@@ -80,8 +80,10 @@ html {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
     scroll-behavior: auto !important;
   }
 }
@@ -101,4 +103,113 @@ html {
 
 .section-y {
   padding-block: clamp(3rem, 6vw, 6rem);
+}
+
+/* ------------------------------------------------------------------
+   Motion system
+   Everything below is progressive: content renders complete without JS,
+   and the reduced-motion block above flattens every animation.
+   ------------------------------------------------------------------ */
+
+:root {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes tv-fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes tv-curtain-up {
+  to { transform: translateY(-100%); }
+}
+
+@keyframes tv-pop {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Intro curtain: plays once per full page load on the homepage */
+.tv-intro {
+  animation: tv-curtain-up 0.9s var(--ease-out-expo) 1s both;
+}
+.tv-intro-logo { animation: tv-pop 0.7s var(--ease-out-expo) both; }
+.tv-intro-word { animation: tv-fade-up 0.7s var(--ease-out-expo) 0.15s both; }
+
+/* Hero text fades up line by line. It waits for the intro curtain when that is showing. */
+.tv-hero-in {
+  animation: tv-fade-up 0.9s var(--ease-out-expo) both;
+  animation-delay: calc(0.1s + var(--i, 0) * 0.12s);
+}
+body:has(.tv-intro) .tv-hero-in {
+  animation-delay: calc(1.25s + var(--i, 0) * 0.12s);
+}
+
+/* Scroll reveal. MotionEffects adds .tv-pending only to elements below the first screen. */
+[data-reveal] {
+  transition:
+    opacity 0.9s var(--ease-out-expo),
+    transform 0.9s var(--ease-out-expo);
+  transition-delay: var(--d, 0s);
+}
+[data-reveal].tv-pending { opacity: 0; transform: translateY(28px); }
+
+/* Curtain reveal for gallery photos */
+[data-curtain] {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 1.3s var(--ease-out-expo);
+  transition-delay: var(--d, 0s);
+}
+[data-curtain] img { transition: transform 1.6s var(--ease-out-expo); }
+[data-curtain].tv-pending { clip-path: inset(100% 0 0 0); }
+[data-curtain].tv-pending img { transform: scale(1.25); }
+
+/* Pointer-follow glow ("Why us" cards) and spotlight (final CTA) */
+.tv-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), rgb(217 180 88 / 0.18), transparent 70%);
+}
+.tv-glow:hover::before { opacity: 1; }
+
+/* Magnetic buttons: MotionEffects writes the translate on pointer move */
+[data-magnetic] {
+  transition:
+    transform 0.5s var(--ease-out-expo),
+    background-color 0.15s,
+    box-shadow 0.3s;
+}
+
+/* 3D tilt cards */
+.tv-tilt {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease-out-expo), box-shadow 0.4s;
+}
+.tv-tilt.is-tilting { transition: transform 0.1s linear, box-shadow 0.4s; }
+.tv-glare {
+  background: radial-gradient(400px circle at var(--gx, 50%) var(--gy, 50%), rgb(255 255 255 / 0.35), transparent 45%);
+  mix-blend-mode: soft-light;
+}
+
+/* Film grain overlay */
+.tv-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.14;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tv-intro { display: none; }
+  [data-reveal].tv-pending { opacity: 1; transform: none; }
+  [data-curtain].tv-pending { clip-path: inset(0 0 0 0); }
+  [data-curtain].tv-pending img { transform: none; }
 }
