@@ -16,7 +16,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://trekvibenepal.com"),
+  metadataBase: new URL("https://www.trekvibenepal.com"),
   title: {
     default: "TrekVibe Nepal | Trekking & Expedition Agency in Kathmandu",
     template: "%s | TrekVibe Nepal",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "TrekVibe Nepal | Trekking & Expedition Agency in Kathmandu",
     description:
       "Feel the mountain vibe. Certified local guides, tailor-made itineraries, and 25+ treks, peak climbs, safaris and city tours across Nepal.",
-    url: "https://trekvibenepal.com",
+    url: "https://www.trekvibenepal.com",
     siteName: "TrekVibe Nepal",
     locale: "en_US",
     type: "website",

@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllTreks } from "@/lib/data/treks";
 import { getAllBlogPosts } from "@/lib/data/blog";
 
-const BASE_URL = "https://trekvibenepal.com";
+const BASE_URL = "https://www.trekvibenepal.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [treks, blogPosts] = await Promise.all([getAllTreks(), getAllBlogPosts()]);
