@@ -6,9 +6,13 @@ import { useState } from "react";
 // Survives client-side navigation, so the intro only plays on a full page load.
 let hasPlayed = false;
 
-/** Logo + "Namaste" for about a second, then the navy screen lifts away. */
+/**
+ * Logo + "Namaste" for about a second, then the navy screen lifts away.
+ * It stays mounted (off-screen) after lifting so the hero's text, which
+ * times its fade-in from `body:has(.tv-intro)`, keeps a steady delay.
+ */
 export default function IntroCurtain() {
-  const [show, setShow] = useState(() => !hasPlayed);
+  const [show] = useState(() => !hasPlayed);
 
   if (!show) return null;
 
@@ -17,9 +21,7 @@ export default function IntroCurtain() {
       aria-hidden="true"
       className="tv-intro fixed inset-0 z-[100] grid place-items-center bg-navy-950 pointer-events-none"
       onAnimationEnd={(e) => {
-        if (e.target !== e.currentTarget) return;
-        hasPlayed = true;
-        setShow(false);
+        if (e.target === e.currentTarget) hasPlayed = true;
       }}
     >
       <div className="grid justify-items-center gap-4">

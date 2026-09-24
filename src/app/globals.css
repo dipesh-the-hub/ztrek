@@ -136,6 +136,15 @@ html {
 .tv-intro-logo { animation: tv-pop 0.7s var(--ease-out-expo) both; }
 .tv-intro-word { animation: tv-fade-up 0.7s var(--ease-out-expo) 0.15s both; }
 
+/* Hero text fades up line by line. It waits for the intro curtain when that is showing. */
+.tv-hero-in {
+  animation: tv-fade-up 0.9s var(--ease-out-expo) both;
+  animation-delay: calc(0.1s + var(--i, 0) * 0.12s);
+}
+body:has(.tv-intro) .tv-hero-in {
+  animation-delay: calc(1.25s + var(--i, 0) * 0.12s);
+}
+
 /* Scroll reveal. MotionEffects adds .tv-pending only to elements below the first screen. */
 [data-reveal] {
   transition:
