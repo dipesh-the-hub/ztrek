@@ -49,12 +49,14 @@ export function LinkButton({
   href,
   variant = "primary",
   size = "md",
+  magnetic = false,
   className,
   children,
-}: BaseProps & { href: string }) {
+}: BaseProps & { href: string; magnetic?: boolean }) {
   return (
     <Link
       href={href}
+      data-magnetic={magnetic || undefined}
       className={clsx(base, variantClasses[variant], sizeClasses[size], className)}
     >
       {children}
