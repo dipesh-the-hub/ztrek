@@ -11,6 +11,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000). The public site works immediately with **no setup** — trek packages, blog posts, testimonials and guides all come from readable data files in `src/lib/*.ts` until a database is connected.
 
+Notes for changing the code (Next.js 16 conventions, database migrations, the animation system, image uploads) are in [DEVELOPMENT.md](DEVELOPMENT.md).
+
 ## Project structure
 
 - `src/app/(site)/` — the public marketing site (home, treks, blog, about, contact, plan-your-trek)
