@@ -43,10 +43,6 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
-  icons: {
-    icon: "/images/brand/logo.webp",
-    apple: "/images/brand/logo.webp",
-  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
