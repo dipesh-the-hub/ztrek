@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://trekvibenepal.com/sitemap.xml",
+    sitemap: "https://www.trekvibenepal.com/sitemap.xml",
   };
 }
