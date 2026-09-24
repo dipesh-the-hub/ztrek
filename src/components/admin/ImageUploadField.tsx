@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { UploadSimple, Spinner } from "@phosphor-icons/react";
 import { uploadImageAction } from "@/lib/actions/upload";
+import { prepareImageUpload } from "@/lib/prepareImageUpload";
 import { TextInput } from "@/components/admin/FormField";
 
 export default function ImageUploadField({
@@ -21,14 +22,19 @@ export default function ImageUploadField({
   async function handleFile(file: File) {
     setStatus("uploading");
     setError("");
-    const formData = new FormData();
-    formData.append("file", file);
-    const result = await uploadImageAction(formData);
-    if (result.url) {
-      setUrl(result.url);
-      setStatus("idle");
-    } else {
-      setError(result.error ?? "Upload failed.");
+    try {
+      const formData = new FormData();
+      formData.append("file", await prepareImageUpload(file));
+      const result = await uploadImageAction(formData);
+      if (result.url) {
+        setUrl(result.url);
+        setStatus("idle");
+      } else {
+        setError(result.error ?? "Upload failed.");
+        setStatus("error");
+      }
+    } catch {
+      setError("Upload failed. Check your connection and try again, or try a smaller photo.");
       setStatus("error");
     }
   }

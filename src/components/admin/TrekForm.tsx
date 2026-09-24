@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { Field, TextInput, TextArea, Select, Checkbox } from "@/components/admin/FormField";
 import ImageUploadField from "@/components/admin/ImageUploadField";
+import MultiImageUploadField from "@/components/admin/MultiImageUploadField";
 import { Button } from "@/components/ui/Button";
 import type { Trek, Region, Category } from "@/lib/treks";
 
@@ -60,8 +61,8 @@ export default function TrekForm({ action, defaultValues, regions, categories, s
         <Field label="Hero image" htmlFor="heroImage">
           <ImageUploadField name="heroImage" defaultValue={defaultValues?.heroImage} />
         </Field>
-        <Field label="Gallery images" htmlFor="gallery" hint="One image URL per line">
-          <TextArea id="gallery" name="gallery" rows={3} defaultValue={defaultValues?.gallery.join("\n")} />
+        <Field label="Gallery images" htmlFor="gallery" hint="Upload several at once. Use the arrows to reorder; remember to click Save.">
+          <MultiImageUploadField name="gallery" defaultValue={defaultValues?.gallery} />
         </Field>
       </section>
 
