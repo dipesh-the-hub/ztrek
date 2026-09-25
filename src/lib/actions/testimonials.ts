@@ -32,6 +32,7 @@ export async function createTestimonialAction(
   await prisma.testimonial.create({ data });
   revalidatePath("/admin/testimonials");
   revalidatePath("/");
+  revalidatePath("/reviews");
   return {};
 }
 
@@ -49,6 +50,7 @@ export async function updateTestimonialAction(
   await prisma.testimonial.update({ where: { id }, data });
   revalidatePath("/admin/testimonials");
   revalidatePath("/");
+  revalidatePath("/reviews");
   return {};
 }
 
@@ -58,4 +60,16 @@ export async function deleteTestimonialAction(id: string) {
   await prisma.testimonial.delete({ where: { id } });
   revalidatePath("/admin/testimonials");
   revalidatePath("/");
+  revalidatePath("/reviews");
+}
+
+/** Publishes a guest review submitted from /reviews. */
+export async function approveTestimonialAction(id: string) {
+  await requireAdmin();
+  if (!USE_DB) return;
+  await prisma.testimonial.update({ where: { id }, data: { published: true } });
+  revalidatePath("/admin/testimonials");
+  revalidatePath("/admin");
+  revalidatePath("/");
+  revalidatePath("/reviews");
 }

@@ -1,13 +1,15 @@
+import Link from "next/link";
 import { Quotes } from "@phosphor-icons/react/dist/ssr";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Avatar from "@/components/ui/Avatar";
 import StarRating from "@/components/ui/StarRating";
 import SkylineDivider from "@/components/ui/SkylineDivider";
+import { LinkButton } from "@/components/ui/Button";
 import { getAllTestimonials } from "@/lib/data/testimonials";
 
 export default async function Testimonials() {
-  const testimonials = await getAllTestimonials();
+  const testimonials = (await getAllTestimonials()).slice(0, 6);
   return (
     <section className="relative section-y bg-navy-950 overflow-hidden">
       <Container>
@@ -39,6 +41,16 @@ export default async function Testimonials() {
               </figcaption>
             </figure>
           ))}
+        </div>
+
+        <div className="mt-10 flex flex-wrap justify-center gap-3">
+          <LinkButton href="/reviews">Read all reviews</LinkButton>
+          <Link
+            href="/reviews#write"
+            className="inline-flex items-center justify-center rounded-full border border-white/30 px-5 py-2.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors min-h-11"
+          >
+            Write a review
+          </Link>
         </div>
       </Container>
 

@@ -90,6 +90,8 @@ model Testimonial {
   trek      String
   rating    Int      @default(5)
   quote     String   @db.Text
+  // Set only on reviews guests submit from /reviews; never shown publicly.
+  email     String?
   published Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

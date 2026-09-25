@@ -5,10 +5,9 @@ import { CheckCircle, WarningCircle } from "@phosphor-icons/react";
 import type { Trek } from "@/lib/treks";
 import { Button } from "@/components/ui/Button";
 import { submitInquiryAction } from "@/lib/actions/inquiries";
+import { FORM_ENDPOINT } from "@/lib/formEndpoint";
 
 type Status = "idle" | "submitting" | "success" | "error";
-
-const FORM_ENDPOINT = "https://formsubmit.co/ajax/adityaneupane53@gmail.com";
 
 interface InquiryFormProps {
   variant?: "trip-planner" | "contact";

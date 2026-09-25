@@ -20,5 +20,5 @@ export async function getAllTestimonialsForAdmin() {
   if (!USE_DB) {
     return staticTestimonials.map((t, i) => ({ ...t, id: String(i), published: true }));
   }
-  return prisma.testimonial.findMany({ orderBy: { createdAt: "desc" } });
+  return prisma.testimonial.findMany({ orderBy: [{ published: "asc" }, { createdAt: "desc" }] });
 }

@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { PencilSimple } from "@phosphor-icons/react";
+import { Check, PencilSimple } from "@phosphor-icons/react";
 import StarRating from "@/components/ui/StarRating";
 import ConfirmDeleteButton from "@/components/admin/ConfirmDeleteButton";
 import TestimonialForm from "@/components/admin/TestimonialForm";
-import { updateTestimonialAction, deleteTestimonialAction } from "@/lib/actions/testimonials";
+import { updateTestimonialAction, deleteTestimonialAction, approveTestimonialAction } from "@/lib/actions/testimonials";
 
 interface TestimonialRowProps {
   testimonial: {
@@ -15,6 +15,7 @@ interface TestimonialRowProps {
     trek: string;
     rating: number;
     quote: string;
+    email?: string | null;
     published: boolean;
   };
 }
@@ -47,15 +48,34 @@ export default function TestimonialRow({ testimonial }: TestimonialRowProps) {
       <div>
         <div className="flex items-center gap-2">
           <p className="font-semibold text-navy-950">{testimonial.name}</p>
-          {!testimonial.published && (
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-stone-200 text-stone-600">Draft</span>
-          )}
+          {!testimonial.published &&
+            (testimonial.email ? (
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-gold-100 text-gold-600">Awaiting approval</span>
+            ) : (
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-stone-200 text-stone-600">Draft</span>
+            ))}
         </div>
-        <p className="text-xs text-stone-500">{testimonial.location} · {testimonial.trek}</p>
+        <p className="text-xs text-stone-500">{[testimonial.location, testimonial.trek].filter(Boolean).join(" · ")}</p>
+        {testimonial.email && (
+          <a href={`mailto:${testimonial.email}`} className="text-xs text-navy-700 hover:text-gold-600 break-all">
+            {testimonial.email}
+          </a>
+        )}
         <div className="mt-1.5"><StarRating rating={testimonial.rating} /></div>
         <p className="mt-2 text-sm text-stone-700 leading-relaxed max-w-xl">{testimonial.quote}</p>
       </div>
       <div className="flex items-center gap-3 shrink-0">
+        {!testimonial.published && (
+          <form action={approveTestimonialAction.bind(null, testimonial.id)}>
+            <button
+              type="submit"
+              className="flex items-center gap-1.5 rounded-full bg-success/10 px-3 py-1.5 text-sm font-semibold text-success hover:bg-success/20 cursor-pointer"
+            >
+              <Check size={15} weight="bold" aria-hidden="true" />
+              Approve
+            </button>
+          </form>
+        )}
         <button
           type="button"
           onClick={() => setEditing(true)}
