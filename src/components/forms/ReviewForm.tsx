@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { CheckCircle, Star, WarningCircle } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/Button";
 import { submitReviewAction } from "@/lib/actions/reviews";
@@ -18,6 +19,7 @@ export default function ReviewForm({ treks }: { treks: { slug: string; name: str
   const [error, setError] = useState("");
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
+  const router = useRouter();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -47,21 +49,21 @@ export default function ReviewForm({ treks }: { treks: { slug: string; name: str
       return;
     }
 
-    // Let the team know a review is waiting for approval. Best-effort only:
-    // the review is already saved, so a failed email doesn't matter to the guest.
+    // Let the team know a new review is live. Best-effort only: the review
+    // is already saved, so a failed email doesn't matter to the guest.
     if (!review.website) {
       fetch(FORM_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          _subject: `New ${rating}-star review waiting for approval — TrekVibe Nepal`,
+          _subject: `New ${rating}-star review posted on TrekVibe Nepal`,
           _captcha: "false",
           name: review.name,
           email: review.email,
           trek: review.trek,
           rating: `${rating} / 5`,
           review: review.quote,
-          approve: "Admin > Testimonials",
+          manage: "Hide or delete it in Admin > Testimonials",
         }),
       }).catch(() => {});
     }
@@ -69,6 +71,8 @@ export default function ReviewForm({ treks }: { treks: { slug: string; name: str
     setStatus("success");
     setRating(0);
     form.reset();
+    // Show the new review on the page right away.
+    router.refresh();
   }
 
   if (status === "success") {
@@ -77,7 +81,7 @@ export default function ReviewForm({ treks }: { treks: { slug: string; name: str
         <CheckCircle size={40} weight="fill" className="mx-auto text-success" aria-hidden="true" />
         <h3 className="mt-4 font-display text-xl font-semibold text-navy-950">Thank you for your review!</h3>
         <p className="mt-2 text-sm text-stone-700">
-          We read every review before it goes live, so yours will appear on this page shortly.
+          Your review is now live on this page. It really helps other trekkers.
         </p>
         <Button type="button" variant="ghost" className="mt-6" onClick={() => setStatus("idle")}>
           Write another review

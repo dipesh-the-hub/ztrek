@@ -63,11 +63,11 @@ export async function deleteTestimonialAction(id: string) {
   revalidatePath("/reviews");
 }
 
-/** Publishes a guest review submitted from /reviews. */
-export async function approveTestimonialAction(id: string) {
+/** Quick show/hide toggle, e.g. to take down a spam review. */
+export async function setTestimonialPublishedAction(id: string, published: boolean) {
   await requireAdmin();
   if (!USE_DB) return;
-  await prisma.testimonial.update({ where: { id }, data: { published: true } });
+  await prisma.testimonial.update({ where: { id }, data: { published } });
   revalidatePath("/admin/testimonials");
   revalidatePath("/admin");
   revalidatePath("/");
