@@ -5,7 +5,8 @@ import { prisma, USE_DB } from "@/lib/db";
 
 export interface ReviewInput {
   name: string;
-  email: string;
+  /** Optional; never shown publicly. */
+  email?: string;
   location: string;
   trek: string;
   rating: number;
@@ -28,14 +29,14 @@ export async function submitReviewAction(input: ReviewInput): Promise<ReviewResu
   if (!USE_DB) return { ok: false, error: "Reviews can't be submitted right now. Please try again later." };
 
   const name = input.name.trim().slice(0, 80);
-  const email = input.email.trim().slice(0, 200);
+  const email = (input.email ?? "").trim().slice(0, 200);
   const location = input.location.trim().slice(0, 80);
   const trek = input.trek.trim().slice(0, 120);
   const quote = input.quote.trim();
   const rating = Math.round(Number(input.rating));
 
   if (!name) return { ok: false, error: "Please enter your name." };
-  if (!EMAIL_RE.test(email)) return { ok: false, error: "Please enter a valid email address." };
+  if (email && !EMAIL_RE.test(email)) return { ok: false, error: "That email address doesn't look right. You can also leave it empty." };
   if (!(rating >= 1 && rating <= 5)) return { ok: false, error: "Please choose a star rating." };
   if (quote.length < 20) return { ok: false, error: "Please write at least a couple of sentences about your trek." };
   if (quote.length > 2000) return { ok: false, error: "Please keep your review under 2,000 characters." };
@@ -46,7 +47,7 @@ export async function submitReviewAction(input: ReviewInput): Promise<ReviewResu
 
   try {
     await prisma.testimonial.create({
-      data: { name, email, location, trek, rating, quote, published: true },
+      data: { name, email: email || null, location, trek, rating, quote, published: true },
     });
   } catch {
     return { ok: false, error: "Something went wrong saving your review. Please try again." };

@@ -59,7 +59,8 @@ export default function ReviewForm({ treks }: { treks: { slug: string; name: str
           _subject: `New ${rating}-star review posted on TrekVibe Nepal`,
           _captcha: "false",
           name: review.name,
-          email: review.email,
+          // FormSubmit uses "email" as the reply-to address, so only send it when given.
+          ...(review.email && { email: review.email }),
           trek: review.trek,
           rating: `${rating} / 5`,
           review: review.quote,
@@ -136,10 +137,10 @@ export default function ReviewForm({ treks }: { treks: { slug: string; name: str
         </div>
         <div>
           <label htmlFor="review-email" className={labelClass}>
-            Email <span className="text-danger">*</span>
+            Email <span className="font-normal text-stone-500">(optional)</span>
           </label>
-          <input id="review-email" name="email" type="email" required autoComplete="email" className={inputClass} />
-          <p className="mt-1 text-xs text-stone-500">Never shown publicly. We only use it to confirm your trip.</p>
+          <input id="review-email" name="email" type="email" autoComplete="email" className={inputClass} />
+          <p className="mt-1 text-xs text-stone-500">Never shown publicly. Add it only if you would like us to reply.</p>
         </div>
       </div>
 
