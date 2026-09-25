@@ -77,8 +77,9 @@ export default function ElevationProfile() {
     [draw],
   );
 
+  // Play is an explicit request for motion, so it animates even under
+  // prefers-reduced-motion; only the automatic scroll-in play is skipped.
   const play = useCallback(async () => {
-    if (reduced.current) return draw(1);
     if (progress.current >= 1) draw(0);
     setPlaying(true);
     setFinished(false);
@@ -233,7 +234,8 @@ export default function ElevationProfile() {
                 scrub(e);
               }}
               onPointerMove={(e) => {
-                if (e.buttons || e.pointerType === "mouse") scrub(e);
+                // Mouse hover scrubs too, but not while playing, or the cursor resting on the chart stops playback.
+                if (e.buttons || (e.pointerType === "mouse" && !playing)) scrub(e);
               }}
             />
           </svg>
