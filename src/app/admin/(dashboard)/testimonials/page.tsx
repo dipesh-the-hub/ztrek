@@ -11,7 +11,7 @@ export default async function AdminTestimonialsPage() {
     <div>
       <h1 className="font-display text-2xl font-semibold text-navy-950">Testimonials</h1>
       <p className="mt-1 text-sm text-stone-600">
-        Guest reviews shown on the homepage and the Reviews page. Reviews guests write on the site wait here until you approve them.
+        Guest reviews shown on the homepage and the Reviews page. Reviews guests write on the site go live straight away; hide or delete any you don&apos;t want shown.
       </p>
 
       <div className="mt-8 space-y-4">

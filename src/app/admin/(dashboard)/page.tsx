@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mountains, Newspaper, ChatCircleText, UsersThree, Envelope, Star } from "@phosphor-icons/react/dist/ssr";
+import { Mountains, Newspaper, ChatCircleText, UsersThree, Envelope } from "@phosphor-icons/react/dist/ssr";
 import { USE_DB, prisma } from "@/lib/db";
 import { getAllTreksForAdmin } from "@/lib/data/treks";
 import { getAllBlogPostsForAdmin } from "@/lib/data/blog";
@@ -7,13 +7,12 @@ import { getAllTestimonialsForAdmin } from "@/lib/data/testimonials";
 import { getAllGuidesForAdmin } from "@/lib/data/guides";
 
 export default async function AdminDashboardPage() {
-  const [treks, posts, testimonials, guides, newInquiries, pendingReviews] = await Promise.all([
+  const [treks, posts, testimonials, guides, newInquiries] = await Promise.all([
     getAllTreksForAdmin(),
     getAllBlogPostsForAdmin(),
     getAllTestimonialsForAdmin(),
     getAllGuidesForAdmin(),
     USE_DB ? prisma.inquiry.count({ where: { status: "NEW" } }) : Promise.resolve(0),
-    USE_DB ? prisma.testimonial.count({ where: { published: false, email: { not: null } } }) : Promise.resolve(0),
   ]);
 
   const cards = [
@@ -22,7 +21,6 @@ export default async function AdminDashboardPage() {
     { label: "Testimonials", count: testimonials.length, href: "/admin/testimonials", icon: ChatCircleText },
     { label: "Guides", count: guides.length, href: "/admin/guides", icon: UsersThree },
     { label: "New Inquiries", count: newInquiries, href: "/admin/inquiries", icon: Envelope, highlight: newInquiries > 0 },
-    { label: "Reviews to Approve", count: pendingReviews, href: "/admin/testimonials", icon: Star, highlight: pendingReviews > 0 },
   ];
 
   return (

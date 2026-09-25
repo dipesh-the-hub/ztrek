@@ -77,7 +77,7 @@ export default async function ReviewsPage() {
         <section id="write" className="mt-16 scroll-mt-28 rounded-2xl border border-stone-300/60 bg-white p-6 sm:p-8 max-w-3xl">
           <h2 className="font-display text-2xl font-semibold text-navy-950">Share your trek</h2>
           <p className="mt-2 text-sm text-stone-600">
-            Your review helps other trekkers choose their route and their team. It appears here once we&apos;ve checked it.
+            Your review helps other trekkers choose their route and their team.
           </p>
           <div className="mt-6">
             <ReviewForm treks={treks.map((t) => ({ slug: t.slug, name: t.name }))} />

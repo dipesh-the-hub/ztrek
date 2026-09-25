@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Check, PencilSimple } from "@phosphor-icons/react";
+import { Eye, EyeSlash, PencilSimple } from "@phosphor-icons/react";
 import StarRating from "@/components/ui/StarRating";
 import ConfirmDeleteButton from "@/components/admin/ConfirmDeleteButton";
 import TestimonialForm from "@/components/admin/TestimonialForm";
-import { updateTestimonialAction, deleteTestimonialAction, approveTestimonialAction } from "@/lib/actions/testimonials";
+import { updateTestimonialAction, deleteTestimonialAction, setTestimonialPublishedAction } from "@/lib/actions/testimonials";
 
 interface TestimonialRowProps {
   testimonial: {
@@ -48,12 +48,9 @@ export default function TestimonialRow({ testimonial }: TestimonialRowProps) {
       <div>
         <div className="flex items-center gap-2">
           <p className="font-semibold text-navy-950">{testimonial.name}</p>
-          {!testimonial.published &&
-            (testimonial.email ? (
-              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-gold-100 text-gold-600">Awaiting approval</span>
-            ) : (
-              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-stone-200 text-stone-600">Draft</span>
-            ))}
+          {!testimonial.published && (
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-stone-200 text-stone-600">Hidden</span>
+          )}
         </div>
         <p className="text-xs text-stone-500">{[testimonial.location, testimonial.trek].filter(Boolean).join(" · ")}</p>
         {testimonial.email && (
@@ -65,17 +62,15 @@ export default function TestimonialRow({ testimonial }: TestimonialRowProps) {
         <p className="mt-2 text-sm text-stone-700 leading-relaxed max-w-xl">{testimonial.quote}</p>
       </div>
       <div className="flex items-center gap-3 shrink-0">
-        {!testimonial.published && (
-          <form action={approveTestimonialAction.bind(null, testimonial.id)}>
-            <button
-              type="submit"
-              className="flex items-center gap-1.5 rounded-full bg-success/10 px-3 py-1.5 text-sm font-semibold text-success hover:bg-success/20 cursor-pointer"
-            >
-              <Check size={15} weight="bold" aria-hidden="true" />
-              Approve
-            </button>
-          </form>
-        )}
+        <form action={setTestimonialPublishedAction.bind(null, testimonial.id, !testimonial.published)}>
+          <button
+            type="submit"
+            className="flex items-center gap-1.5 text-sm font-semibold text-navy-900 hover:text-gold-600 cursor-pointer"
+          >
+            {testimonial.published ? <EyeSlash size={15} aria-hidden="true" /> : <Eye size={15} aria-hidden="true" />}
+            {testimonial.published ? "Hide" : "Show"}
+          </button>
+        </form>
         <button
           type="button"
           onClick={() => setEditing(true)}
