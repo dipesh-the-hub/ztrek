@@ -3,7 +3,7 @@
 export default function WhatsAppButton() {
   return (
     <a
-      href="https://wa.me/9779741765998"
+      href="https://wa.me/9779818900783"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with TrekVibe Nepal on WhatsApp"

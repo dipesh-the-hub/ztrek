@@ -146,13 +146,13 @@ export default function Navbar({
 
         <div className="hidden lg:flex items-center gap-4">
           <a
-            href="tel:+9779741765998"
+            href="tel:+9779818900783"
             className={`flex items-center gap-2 text-sm font-semibold transition-colors ${
               transparent ? "text-white hover:text-gold-300" : "text-navy-900 hover:text-gold-600"
             }`}
           >
             <Phone size={18} weight="fill" aria-hidden="true" />
-            +977 974-1765998
+            +977 981-8900783
           </a>
           <LinkButton href="/plan-your-trek" size="md">
             Plan Your Trek
@@ -257,11 +257,11 @@ export default function Navbar({
               }
             })}
             <a
-              href="tel:+9779741765998"
+              href="tel:+9779818900783"
               className="min-h-11 flex items-center gap-2 text-base font-semibold text-navy-900 px-3"
             >
               <Phone size={18} weight="fill" aria-hidden="true" />
-              +977 974-1765998
+              +977 981-8900783
             </a>
           </Container>
         </div>
