@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 const contactDetails = [
-  { icon: Phone, label: "Call or WhatsApp", value: "+977 974-1765998", href: "tel:+9779741765998" },
+  { icon: Phone, label: "Call or WhatsApp", value: "+977 981-8900783", href: "tel:+9779818900783" },
   { icon: EnvelopeSimple, label: "Email", value: "adityaneupane53@gmail.com", href: "mailto:adityaneupane53@gmail.com" },
   { icon: MapPin, label: "Office", value: "Thamel, Kathmandu, Nepal", href: undefined },
   { icon: Clock, label: "Office Hours", value: "Sun–Fri, 9:00 AM – 6:00 PM (NPT)", href: undefined },
@@ -50,7 +50,7 @@ export default async function ContactPage() {
             ))}
 
             <a
-              href="https://wa.me/9779741765998"
+              href="https://wa.me/9779818900783"
               className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white hover:brightness-105 transition-[filter] min-h-11"
             >
               <WhatsappLogo size={18} weight="fill" aria-hidden="true" />

@@ -56,7 +56,7 @@ export default async function Footer() {
               <FacebookLogo size={20} aria-hidden="true" />
             </a>
             <a
-              href="https://wa.me/9779741765998"
+              href="https://wa.me/9779818900783"
               aria-label="Message TrekVibe Nepal on WhatsApp"
               className="flex items-center justify-center h-10 w-10 rounded-full bg-white/10 hover:bg-gold-500 hover:text-navy-950 transition-colors"
             >
@@ -120,8 +120,8 @@ export default async function Footer() {
             </li>
             <li className="flex items-start gap-2.5">
               <Phone size={18} className="text-gold-400 mt-0.5 shrink-0" aria-hidden="true" />
-              <a href="tel:+9779741765998" className="text-navy-100/85 hover:text-gold-300 transition-colors">
-                +977 974-1765998
+              <a href="tel:+9779818900783" className="text-navy-100/85 hover:text-gold-300 transition-colors">
+                +977 981-8900783
               </a>
             </li>
             <li className="flex items-start gap-2.5">
