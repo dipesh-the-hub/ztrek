@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CalendarBlank, Clock, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Container from "@/components/ui/Container";
+import InlineText from "@/components/blog/InlineText";
 import { getAllBlogPosts, getBlogPostBySlug } from "@/lib/data/blog";
 
 export const revalidate = 3600;
@@ -86,18 +87,25 @@ export default async function BlogPostPage({
                 </h2>
               );
             }
+            if (block.type === "subheading") {
+              return (
+                <h3 key={i} className="font-display text-xl font-semibold text-navy-950 mt-8 mb-3">
+                  {block.text}
+                </h3>
+              );
+            }
             if (block.type === "list") {
               return (
                 <ul key={i} className="mt-4 space-y-2.5 list-disc pl-5 text-stone-700">
                   {block.items.map((item, j) => (
-                    <li key={j} className="leading-relaxed">{item}</li>
+                    <li key={j} className="leading-relaxed"><InlineText text={item} /></li>
                   ))}
                 </ul>
               );
             }
             return (
               <p key={i} className="mt-4 text-stone-700 leading-relaxed">
-                {block.text}
+                <InlineText text={block.text} />
               </p>
             );
           })}

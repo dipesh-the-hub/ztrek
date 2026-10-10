@@ -61,7 +61,7 @@ export default function BlogPostForm({ action, defaultValues, submitLabel }: Blo
       <Field
         label="Body content"
         htmlFor="content"
-        hint='Headings start with "## ", bullet points start with "- ", everything else is a paragraph.'
+        hint='Headings start with "## ", subheadings with "### ", bullet points with "- ", everything else is a paragraph. Add links as [link text](https://...).'
       >
         <TextArea
           id="content"
